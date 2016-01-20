@@ -1211,10 +1211,11 @@
             _.initializeEvents();
             _.updateArrows();
             _.updateDots();
-
+            
         }
 
         if (creation) {
+            _.querySlide();
             _.$slider.trigger('init', [_]);
         }
 
@@ -2587,6 +2588,23 @@
 
         }
 
+    };
+
+    Slick.prototype.querySlide = function() {
+        var _ = this;
+
+        var checkQuery;
+        var sliderId  = _.instanceUid;
+        var paramName = "slick" + sliderId;
+        var queries   = window.location.search.slice(1).split('&');
+
+        for (var query in queries) {
+            checkQuery = queries[query].split('=');
+
+            if (checkQuery[0] == paramName) {
+                _.goTo(parseInt( checkQuery[1], 10 ), false);
+            }
+        }
     };
 
     Slick.prototype.visibility = function() {
